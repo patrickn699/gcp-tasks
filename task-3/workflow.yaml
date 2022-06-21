@@ -1,0 +1,31 @@
+- init:
+  assign: 
+    description: "assign workflow variables"
+    project: "demo-project-1"
+    topic: "email-by-customer"
+    subscription: ["development-team", "devops-team", "management-team"]
+    mail: "support.example.com"
+
+- listen-event:
+    description: "Listen for email events made by the users"
+    call: http.post
+    url: http://support.example.com/
+    next: notify-backend-teams
+
+- notify-backend-teams:
+    description: "When an email is sent by the user notify the backend teams"
+    call: googleapis.pubsub.v1.projects.topics.publish
+    args:
+      topic: ${"projects/" + project + "/topics/" + topic}
+      body:
+        messages:
+          - data: "you have received an email from ${mail}, please check it"
+    next: end
+
+- end:
+    description: "end the workflow"
+    return: "workflow completed"
+
+
+
+
