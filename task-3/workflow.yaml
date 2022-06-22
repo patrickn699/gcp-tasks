@@ -3,7 +3,6 @@
     description: "assign workflow variables"
     project: "demo-project-1"
     topic: "email-by-customer"
-    subscription: ["development-team", "devops-team", "management-team"]
     mail: "support.example.com"
 
 - listen-event:

@@ -8,7 +8,8 @@ def create_topic(topic_name):
     args:
         topic_name: name of the topic to be created.
     '''
-    
+    subprocess.run(['gcloud', 'services','enable', 'pubsub.googleapis.com'], shell=True)
+
     subprocess.run(['gcloud', 'pubsub', 'topics', 'create', topic_name], shell=True)
 
 
@@ -24,6 +25,24 @@ def subscribe_to_topic(topic_name, subscription_name):
     subprocess.run(['gcloud','pubsub','subscriptions', 'create', subscription_name, '--topic', topic_name], shell=True)
 
 
+def trigger_function(name, region, runtime, topic_name, entry_point):
+
+    '''
+    This method is triggerd when a new message is published to the topic.
+    args:
+        name: name of the function.
+        region: the region where the function must be deployed.
+        runtime: the language of the function.
+        topic_name: name of the topic to subscribe.
+        entry_point: name of the function to execute.
+    '''
+    
+    subprocess.run(['gcloud','services','enable','cloudfunctions.googleapis.com'], shell=True)
+
+    subprocess.run(['gcloud', 'functions', 'deploy', name, '--region', region, '--runtime', runtime,
+     '--trigger-topic', topic_name,'--entry-point',  entry_point], shell=True)
+
+
 def create_workflow(workflow_name, region, service_account):
 
     '''
@@ -33,6 +52,8 @@ def create_workflow(workflow_name, region, service_account):
         region: region where the workflow should be deployed.
         service_aacount: specified service account.
     '''
+
+    subprocess.run(['gcloud', 'services','enable', 'workflows.googleapis.com'], shell=True)
 
     subprocess.run(['gcloud','workflows', 'deploy', workflow_name, '--location', region,
     '--service-account', service_account, '--source', 'workflow.yaml'], shell=True)
@@ -63,11 +84,10 @@ def execute_workflow(workflow_name, region):
     subprocess.run(['gcloud', 'workflows', 'execute', workflow_name, '--location', region], shell=True)
 
 
+
 create_topic('email-by-customer')
-subscribe_to_topic('email-by-customer', 'devlopment-team')
-subscribe_to_topic('email-by-customer', 'devops-team')
-subscribe_to_topic('email-by-customer', 'management-team')
-create_workflow('email-event', 'us-west1', "demo-service-account")
+#subscribe_to_topic('email-by-customer', 'devlopment-team')
+trigger_function("send-emails", 'us-west1', 'python38', 'email-by-customer','send_mail')
 get_details('email-event', 'us-west1')
 execute_workflow('email-event', 'us-west1')
 
