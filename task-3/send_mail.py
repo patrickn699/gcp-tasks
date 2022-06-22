@@ -18,16 +18,15 @@ def send_mail(event, context):
     from_mail = Email("gcp-pubsub@example.com")
 
     # send email to
-    to_mail = To(["devops_support@example.com","dev_support@example",
-    "management_support@example.com"])
+    to_mail = To(["devops_support@example.com","dev_support@example", "management_support@example.com"])
 
     # subject of the email
     subject = "Alert!...mail from client"
 
     # body of email
-    content = Content("text/plain", "client has sent an email please look into it ")
+    content = Content("text/plain", "client has sent an email please look into it.")
 
-    # create and send ema   il request to the destination addresses
+    # create and send email request to the destination addresses
     mail = Mail(from_mail, to_mail, subject, content)
     response = mailg.client.mail.send.post(request_body=mail.get())
 

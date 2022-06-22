@@ -8,7 +8,7 @@
 - listen-event:
     description: "Listen for email events made by the users"
     call: http.post
-    url: http://support.example.com/
+    url: https://support.example.com/
     next: notify-backend-teams
 
 - notify-backend-teams:

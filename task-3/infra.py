@@ -88,6 +88,7 @@ def execute_workflow(workflow_name, region):
 create_topic('email-by-customer')
 #subscribe_to_topic('email-by-customer', 'devlopment-team')
 trigger_function("send-emails", 'us-west1', 'python38', 'email-by-customer','send_mail')
+create_workflow('email-event', 'us-west1', 'demo-service-1122')
 get_details('email-event', 'us-west1')
 execute_workflow('email-event', 'us-west1')
 
