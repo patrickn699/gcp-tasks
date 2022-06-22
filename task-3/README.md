@@ -5,6 +5,8 @@
 When an email is sent to support.example.com by client, at the backend
 cloud workflows will start executing where, it calls pub/sub and publishes a message to the channel. As soon as the message is publishes a cloud function will be triggered which will then send an email to the devlopment, devops and management team respectively saying client has sent an email so look into it.
 
+The workflow uses series of steps defined inside workflow.yaml, the workflow will start running the steps written in it.
+
 services used:
 
 1. Wrokflows

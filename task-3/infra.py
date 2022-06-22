@@ -8,6 +8,7 @@ def create_topic(topic_name):
     args:
         topic_name: name of the topic to be created.
     '''
+    
     subprocess.run(['gcloud', 'services','enable', 'pubsub.googleapis.com'], shell=True)
 
     subprocess.run(['gcloud', 'pubsub', 'topics', 'create', topic_name], shell=True)
@@ -33,7 +34,7 @@ def trigger_function(name, region, runtime, topic_name, entry_point):
         name: name of the function.
         region: the region where the function must be deployed.
         runtime: the language of the function.
-        topic_name: name of the topic to subscribe.
+        topic_name: name of the topic to listen.
         entry_point: name of the function to execute.
     '''
     

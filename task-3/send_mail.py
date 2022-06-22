@@ -24,7 +24,7 @@ def send_mail(event, context):
     subject = "Alert!...mail from client"
 
     # body of email
-    content = Content("text/plain", "client has sent an email please look into it.")
+    content = Content("text/plain", "Hello team!, client has sent an email please look into it.")
 
     # create and send email request to the destination addresses
     mail = Mail(from_mail, to_mail, subject, content)
