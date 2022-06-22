@@ -18,10 +18,10 @@ def send_mail(event, context):
     from_mail = Email("gcp-pubsub@example.com")
 
     # send email to
-    to_mail = To(["devops_support@example.com","dev_support@example", "management_support@example.com"])
+    to_mail = To(["devops_support@example.com","dev_support@example.com", "management_support@example.com"])
 
     # subject of the email
-    subject = "Alert!...mail from client"
+    subject = "Alert!, mail from client"
 
     # body of email
     content = Content("text/plain", "Hello team!, client has sent an email please look into it.")
