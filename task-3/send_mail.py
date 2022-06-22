@@ -17,7 +17,7 @@ def send_mail(event, context):
     # send email from
     from_mail = Email("gcp-pubsub@example.com")
 
-    # send email to
+    # send email to all the 3 teams
     to_mail = To(["devops_support@example.com","dev_support@example.com", "management_support@example.com"])
 
     # subject of the email
