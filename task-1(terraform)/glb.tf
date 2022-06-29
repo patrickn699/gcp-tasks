@@ -1,10 +1,3 @@
-provider "google"{
-
-    project = "terraform-test-project"
-    credentials = file("credentials.json")
-    region = "us-central1"
-}
-
 resource "google_cloud_run_service" "container_app" {
 
     name = "docker-app"
@@ -25,8 +18,8 @@ resource "google_cloud_run_service" "container_app" {
     }
 
     ports {
-        protocol = "tcp"
-        container_port = "80"
+        protocol = "TCP"
+        container_port = 80
     }
 }
 
@@ -36,12 +29,12 @@ resource "google_compute_network_endpoint_group" "neg-cloud-run"{
     network = "default"
     subnetwork = "subnet-1"
     zone = "us-central1-a"
+    network_endpoint_type = "SERVERLESS"
 
     cloud_run {
         service = google_cloud_run_service.container_app.name
 
     }
-
 
 } 
 
@@ -55,7 +48,7 @@ resource "google_compute_backend_service" "neg-backend-cloud-run" {
     }
 
     load_balancing_scheme = "EXTERNAL"
-    port_name = "80"
+    port_name = 80
     protocol = "HTTP"
   
 }
@@ -80,7 +73,7 @@ resource "google_compute_global_forwarding_rule" "neg-forwarding-rule" {
     target = google_compute_target_http_proxy.neg-target-http-proxy.self_link
     ip_protocol = "TCP"
     load_balancing_scheme = "EXTERNAL"
-    port_range = "80"
+    port_range = 80
     
   
 }
