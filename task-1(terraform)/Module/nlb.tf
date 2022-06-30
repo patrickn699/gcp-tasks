@@ -81,7 +81,7 @@ resource "google_compute_instance_group_manager" "vm-instance-group" {
         instance_template = google_compute_instance_template.vm-instance-template.self_link
     }
 
-    target_size = 4
+    target_size = 2
 
     auto_healing_policies {
 
