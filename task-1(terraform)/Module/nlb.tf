@@ -102,7 +102,7 @@ resource "google_compute_autoscaler" "vm-autoscaler" {
     target = google_compute_instance_group_manager.vm-instance-group.self_link
 
     autoscaling_policy {
-        min_replicas = 1
+        min_replicas = 2
         max_replicas = 6
         
         cpu_utilization {
