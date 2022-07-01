@@ -2,6 +2,7 @@ resource "google_compute_network" "vm-vpc" {
 
     name = "gce-vpc"
     auto_create_subnetworks = false
+    # ip address
     
 }
 
@@ -93,7 +94,7 @@ resource "google_compute_instance_group_manager" "vm-instance-group" {
 
 }
 
-# auto-scaler pendinng
+
 resource "google_compute_autoscaler" "vm-autoscaler" {
 
     name = "gce-autoscaler"
@@ -106,7 +107,7 @@ resource "google_compute_autoscaler" "vm-autoscaler" {
         max_replicas = 6
         
         cpu_utilization {
-            target = 0.8
+            target = 0.75
         }
     }
 }
@@ -121,6 +122,8 @@ resource "google_compute_region_backend_service" "vm-backend-service" {
     backend {
         group = google_compute_instance_group_manager.vm-instance-group.self_link
     }
+
+    load_balancing_scheme = "EXTERNAL"
 
     
 }
