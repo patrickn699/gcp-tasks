@@ -1,3 +1,4 @@
+
 resource "google_compute_network" "on-prem-vpc-1" {
 
     name = "on-prem-vm-vpc"
@@ -54,12 +55,12 @@ resource "google_compute_instance" "on-prem-vm-instance" {
   
 }
 
-
+/*
 resource "google_compute_ha_vpn_gateway" "vpn-1" {
 
     name = "vpn-gateway-1"
     region = "us-central1"
-    network = google_compute_network.vpc-2.self_link
+    network = google_compute_network.on-prem-vpc-1.self_link
   
 }
 
@@ -106,11 +107,10 @@ resource "google_compute_router_peer" "peer-1" {
 
 
 }
-
-output "vpn-gateway-1-self-link" {
-    value = google_compute_ha_vpn_gateway.vpn-1.self_link
+*/
+output "vpc-name" {
+    value = google_compute_network.on-prem-vpc-1.self_link
 }
 
 
-  
 

@@ -55,6 +55,7 @@ resource "google_compute_instance" "vm-instance" {
 }
 
 
+/*
 resource "google_compute_ha_vpn_gateway" "vpn-2" {
 
     name = "vpn-gateway-1"
@@ -105,7 +106,9 @@ resource "google_compute_router_peer" "peer-2" {
   
 }
 
-output "vpn_gateway_2-self_link" {
-    value = google_compute_ha_vpn_gateway.vpn-2.self_link
+*/
+
+output "vpc-name" {
+    value = google_compute_network.vpc-2.self_link
 }
-  
+
