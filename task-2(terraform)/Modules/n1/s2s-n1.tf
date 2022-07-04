@@ -1,3 +1,4 @@
+# onprem vm
 
 resource "google_compute_network" "on-prem-vpc-1" {
 

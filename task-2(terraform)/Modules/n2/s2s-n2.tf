@@ -1,3 +1,5 @@
+# gcp vm
+
 resource "google_compute_network" "vpc-2" {
 
     name = "vm-vpc-2"
