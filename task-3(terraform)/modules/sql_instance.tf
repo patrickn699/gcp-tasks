@@ -19,6 +19,7 @@ resource "google_sql_database_instance" "my-sql-server" {
         binary_log_enabled = true
         point_in_time_recovery_enabled = true
         start_time = "00:00"
+        location = "asia-west1"
 
         backup_retention_settings {
           
