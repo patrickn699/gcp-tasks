@@ -24,6 +24,7 @@ resource "google_pubsub_topic" "dl-topic" {
 resource "google_pubsub_subscription" "my-subscription" {
 
     name = "my-subscription"
+
     topic = google_pubsub_topic.my-topic.name
 
     ack_deadline_seconds = 20

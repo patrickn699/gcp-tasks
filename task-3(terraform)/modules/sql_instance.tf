@@ -57,3 +57,20 @@ resource "google_sql_database_instance" "my-sql-server" {
     deletion_protection = true
 
 }
+
+
+resource "google_sql_user" "my-sql-user" {
+
+    name = "root_user"
+    password = "root_pass@123"
+    instance = google_sql_database_instance.my-sql-server.name
+    project = "demo-project"
+  
+}
+
+output "sql_instance_ip" {
+
+    value = google_sql_database_instance.my-sql-server.ip_address
+}
+  
+
