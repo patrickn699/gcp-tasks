@@ -34,7 +34,7 @@ resource "google_pubsub_subscription" "my-subscription" {
 
     expiration_policy {
       
-      ttl = "120s"
+      ttl = "86400s"
     }
     
     dead_letter_policy {
@@ -52,4 +52,20 @@ resource "google_pubsub_subscription" "my-subscription" {
     }
 
     
+}
+
+resource "google_pubsub_subscription" "dl-subscription" {
+
+    name = "dl-subscription"
+    topic = google_pubsub_topic.dl-topic.name
+    message_retention_duration = 120
+    ack_deadline_seconds = 40
+
+
+    expiration_policy {
+      
+      ttl = "86400s"
+    }
+
+  
 }

@@ -1,16 +1,10 @@
-resource "google_compute_network" "private-vpc" {
-
-    name = "private-my_sql-vpc"
-  
-}
-
-
 resource "google_sql_database_instance" "my-sql-server" {
 
     name = "cloud sql instance"
     region = "asia-east1"
     database_version = "mysql_5_7"
     project = "demo-project"
+    master_instance_name = google_sql_database_instance.my-sql-server.name
 
     settings {
 
@@ -21,16 +15,31 @@ resource "google_sql_database_instance" "my-sql-server" {
 
       backup_configuration {
         
-        binary_log_enabled = true
         enabled = true
+        binary_log_enabled = true
         point_in_time_recovery_enabled = true
         start_time = "00:00"
+
+        backup_retention_settings {
+          
+          retained_backups = 3
+          retention_unit = "COUNT"
+
+            }
+
+        }
+
+        maintenance_window {
+          
+          day = 7
+          hour = 0
+          update_track = "stable"
+
         }
 
       ip_configuration {
         
         ipv4_enabled = true
-        private_network = google_compute_network.private-vpc.self_link
         
         }
     
@@ -41,12 +50,10 @@ resource "google_sql_database_instance" "my-sql-server" {
         user = "root_user"
         password = "root_pass@123"
         failover_target = true
-        location = "us-east1"
-        database_version = "mysql_5_7"
+
     }
 
     root_password = "root_user@123"
     deletion_protection = true
-    
 
 }
