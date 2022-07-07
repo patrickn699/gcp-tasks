@@ -1,2 +1,54 @@
-init:
-  
+- init:
+    assign:
+    - project_id: "demo-project"
+    - cloud_run_service_name: "api-service"
+    - firestore_insance_name: "firestore-instance"
+    - firestore_collection_name: "weather-collection"
+    - forestore_document_name: "weather-document"
+
+- cloud_run_service_url:
+    call: google.cloud.run.v1.namespaces.services.get 
+    args:
+      name: ${"namespaces/" +project_id + /"services/" + cloud_run_service_name}
+      location: "us-central1"
+
+    result: service_name.url
+    next: call_cloud_run_service_url
+
+- call_cloud_run_service_url:
+    call: http.get
+    args: service_name.url
+    result: json_response.body
+    next: insert_firestore_data
+
+- insert_in_firestore:
+
+    call: googleapis.firestore.v1.projects.databases.documents.createDocument
+    args:
+      collectionId: firestore_collection_name
+      parent: ${"projects/" + project_id + "/databases/" + firestore_instance_name + "/documents"}
+      query:
+        documentId: firestore_document_name
+      body:
+        fields:
+          city:
+            stringValue: json_response.body.city
+          temprature:
+            integerValue: json_response.body.temprature
+
+    result: firestore_response.body
+
+    switch:
+      - condition: firestore_response.statusCode == 200
+        next: end
+      - condition: firestore_response.statusCode != 200
+        next: error
+
+- error:
+    raise: "Error in inserting data in firestore"
+
+- end:
+    return: "Successfully inserted data in firestore"
+          
+            
+         

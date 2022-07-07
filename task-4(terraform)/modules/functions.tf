@@ -1,33 +1,61 @@
 resource "google_storage_bucket" "img_bucket" {
 
-    name = "upload-bucket"
+    name = "image-bucket"
     location = "europe-west1"
     project = "demo-project"
     storage_class = "standard"
+
+
+    retention_policy {
+
+     # 2 days 
+     retention_period = 172800
+
+    }
   
 }
 
 resource "google_storage_bucket" "resize_bucket" {
 
-    name = "download-bucket"
-    location = "europe-east1"
+    name = "resize-bucket"
+    location = "europe-west1"
     project = "demo-project"
     storage_class = "standard"
+
+    lifecycle_rule {
+      
+        action {
+            
+           type = "setStorageClass"
+           storage_class = "coldline"
+            
+        }
+        
+        condition {
+            
+            age = "7d"
+            
+        }
+        
+
+    }
   
 }
 
 resource "google_storage_bucket" "src_bucket" {
 
-    name = "download-bucket"
+    name = "src-bucket-for-functions"
     location = "europe-east1"
     project = "demo-project"
     storage_class = "standard"
   
 }
 
+
 resource "google_cloudfunctions_function" "img-resize" {
 
     name = "img-resize"
+
     runtime = "python37"
 
     available_memory_mb = 256
