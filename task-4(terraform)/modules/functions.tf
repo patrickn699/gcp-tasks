@@ -58,7 +58,7 @@ resource "google_cloudfunctions_function" "img-resize" {
 
     runtime = "python37"
 
-    available_memory_mb = 256
+    available_memory_mb = 512
     timeout = 120
 
     source_archive_bucket = google_storage_bucket.src_bucket.name

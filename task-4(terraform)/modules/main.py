@@ -11,11 +11,13 @@ def main(event, context):
     """
     # Get the file name from the trigger event.
     file_name = event['name']
+    img_buk = event['bucket']
 
     if file_name[-3] == 'jpg' or file_name[-3] == 'png':
 
         # Get the files from GCS and setup upload bucket name.
-        gcs_file = storage.Client().bucket(event['bucket']).get_blob(file_name)
+        gcs_file = storage.Client().bucket(img_buk).get_blob(file_name)
+
         upload_buk = storage.Client().bucket('resize-bucket')
 
         # Get the file content.
@@ -30,7 +32,7 @@ def main(event, context):
         # Save the image to the orginal file
         image.save(file_content)
 
-        # convert the image into blob and uplod the file to the destination bucket.
+        # create the destination image into blob and uplod the file to the destination bucket.
         upload_buk.blob(file_name+"_resized")
         upload_buk.upload_from_string(file_content)
         

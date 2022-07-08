@@ -1,7 +1,7 @@
 - init:
     assign:
     - project_id: "demo-project"
-    - cloud_run_service_name: "api-service"
+    - cloud_run_service_name: "weather-api-service"
     - firestore_insance_name: "firestore-instance"
     - firestore_collection_name: "weather-collection"
     - forestore_document_name: "weather-document"

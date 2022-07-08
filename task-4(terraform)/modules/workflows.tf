@@ -1,6 +1,6 @@
 resource "google_cloud_run_service" "api-service" {
 
-    name = "api-service"
+    name = "weather-api-service"
     region = "us-central1"
 
     template {
@@ -8,9 +8,9 @@ resource "google_cloud_run_service" "api-service" {
       sepc{
         containers {
 
-          name = "web-api"
+          name = "weather-api"
           image = "gcr.io/cloud-run/api-service:latest"
-          
+
           ports {
             container_port = 8080
           }
