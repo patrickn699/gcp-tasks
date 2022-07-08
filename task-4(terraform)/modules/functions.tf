@@ -27,13 +27,13 @@ resource "google_storage_bucket" "resize_bucket" {
         action {
             
            type = "setStorageClass"
-           storage_class = "coldline"
+           storage_class = "nearline"
             
         }
         
         condition {
             
-            age = 7
+            age = 20
             
         }
         
@@ -68,7 +68,7 @@ resource "google_cloudfunctions_function" "img-resize" {
     event_trigger {
 
         event_type = "google.storage.object.finalize"
-        resource = google_storage_bucket.img_bucket.name
+        resource = _bucket.name
 
         failure_policy {
           

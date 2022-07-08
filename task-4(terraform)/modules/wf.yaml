@@ -12,11 +12,13 @@
     args:
       name: ${"namespaces/" +project_id + /"services/" + cloud_run_service_name}
       location: "us-central1"
+    # https://microservicesexample1-3wv4vbmeja-as.a.run.app/mumbai
 
     result: service_name.url
     next: call_cloud_run_service_url
 
 - call_cloud_run_service_url:
+
     call: http.get
     args: service_name.url
     result: json_response.body
@@ -37,7 +39,7 @@
           temprature:
             integerValue: json_response.body.temprature
 
-    result: firestore_response.body
+    result: firestore_response.statusCode
 
     switch:
       - condition: firestore_response.statusCode == 200

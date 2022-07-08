@@ -4,11 +4,6 @@ from PIL import Image
 
 def main(event, context):
 
-    """Triggers when a file is created in GCS.
-    Args:
-        event: Event payload.
-        context: Metadata for the event.
-    """
     # Get the file name from the trigger event.
     file_name = event['name']
     img_buk = event['bucket']
