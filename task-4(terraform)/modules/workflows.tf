@@ -10,6 +10,7 @@ resource "google_cloud_run_service" "api-service" {
 
           name = "web-api"
           image = "gcr.io/cloud-run/api-service:latest"
+          
           ports {
             container_port = 8080
           }

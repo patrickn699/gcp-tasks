@@ -33,7 +33,7 @@ resource "google_storage_bucket" "resize_bucket" {
         
         condition {
             
-            age = "7d"
+            age = 7
             
         }
         
