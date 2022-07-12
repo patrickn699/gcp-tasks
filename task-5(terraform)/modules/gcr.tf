@@ -37,37 +37,44 @@ resource "google_cloud_run_service" "cloud_run" {
           }
 
           volume_mounts {
-            name = "volume-1"
-            mount_path = "/tmp/data"
+
+            name = "app-volume"
+            mount_path = "/temp/data"
           }
-        }
 
-        resource {
+          resources {
 
-          limits {
+            limits {
 
             cpu = 2
             memory = 512
           
+            }
         }
-      }
 
-    volumes {
 
-       name = "volume-1"
-        
     }
 
 
     }
 
     traffic {
+
         revision_name = "cloud_run-v1"
         percent = 100
+        }
+
+    traffic {
+
+        revision_name = "cloud_run-v2"
+        percent = 25
+        }
+
     }
-}
 
 }
+
+
 
 resource "google_cloudbuild_trigger" "cloud_build" {
 
